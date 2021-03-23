@@ -2,12 +2,39 @@
 #
 # Unstage all .html and .pdf files that share the same basename as a .Rmd file
 # which resides in the same directory, and add said files to the .gitignore 
+echo running precommit...
+
+# Remove the spaces from the basename of a file in a filepath,
+# but leave directory spaces intact  
+function file_strip_space(){
+    basename="${1##*/}"
+    pathname="${1%/*}"
+	if [ "${#basename}" == "${#1}" ]; then 
+	    echo ${basename// /-}
+	else
+	    echo "${pathname}/${basename// /-}"
+	fi
+}
+
+
+
+function change_ext(){
+        echo "${1%.*}.$2"
+}
+
 stagedFiles=$(git diff --staged --name-only --diff-filter=A) 
+#stagedFiles+="
+#"$(git diff --name-only --diff-filter=A) 
+#stagedFiles+="
+#$(git ls-files --others --exclude-standard)
+#" # go through untracked files as well 
+echo staged: ${stagedFiles}
 IFS=$'\n'
 for file in $stagedFiles; do 
     lower=$(echo $file | tr "[:upper:]" "[:lower:]")
     if [[ $lower == *.rmd ]]; then
         filename="${file%.*}"
+        filename=$(file_strip_space $filename)
         git restore --staged "$filename.pdf" 2>/dev/null 
         if [[ $? == 0 ]]; then 
             echo ignore-knit: Unstaging $filename.pdf 
