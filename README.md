@@ -7,6 +7,9 @@ If you haven't implemented a pre-commit hook, simply download this file and past
 your repository's .git/hooks folder. Otherwise, append this to your already existing 
 pre-commit file. 
 
+You can also add this to a global templates folder (see "how to create a global git commit hook")
+to be automatically created when initializing a new repository. 
+
 **Note: default, pre-commit.sample exists as a hook. Do not append this script to 
 pre-commit.sample or it will not work.** 
 
