@@ -48,3 +48,6 @@ po/*~
 *.tex
 */Notes.pdf # Keep ppts and others, just not generated pdfs  
 Notes.pdf
+
+test-data/
+
