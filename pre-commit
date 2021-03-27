@@ -50,3 +50,6 @@ $filename.pdf
 $filename.html" >> .gitignore 
     fi 
 done 
+
+git add .gitignore 
+echo ignore-knit: Staging .gitignore to be committed 
